@@ -9,12 +9,12 @@ export default defineConfig({
     proxy: {
       // Proxy /api/* requests to your Express backend
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://fake-news-erql.onrender.com',
         changeOrigin: true,
       },
       // (optional) if you’re serving uploaded PDFs under /uploads
       '/uploads': {
-        target: 'http://localhost:5000',
+        target: 'https://fake-news-erql.onrender.com',
         changeOrigin: true,
       },
     }
