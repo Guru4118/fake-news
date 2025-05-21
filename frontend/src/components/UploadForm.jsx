@@ -30,30 +30,31 @@ export default function UploadForm({ onResult }) {
 
   return (
     <>
-    <form
-      onSubmit={submitHandler}
-      className="bg-black p-6 rounded-lg shadow-lg mb-6 max-w-md mx-auto border border-green-500"
-    >
-      <h2 className="text-2xl font-bold text-green-500 mb-4 text-center">Upload Image</h2>
-      
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setFile(e.target.files[0])}
-        className="w-full bg-gray-800 text-white border border-gray-700 rounded p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
-      />
-      
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-green-500 text-white font-semibold py-2 rounded hover:bg-green-600 disabled:opacity-50 transition"
+      <form
+        onSubmit={submitHandler}
+        className="bg-black p-6 rounded-lg shadow-lg mb-6 max-w-md mx-auto border border-green-500"
       >
-        {loading ? 'Processing...' : 'Upload & Check'}
-      </button>
-      <br/>
+        <h2 className="text-2xl font-bold text-green-500 mb-4 text-center">Upload Image</h2>
+
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="w-full bg-gray-800 text-white border border-gray-700 rounded p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-green-500 text-white font-semibold py-2 rounded hover:bg-green-600 disabled:opacity-50 transition"
+        >
+          {loading ? 'Processing...' : 'Upload & Check'}
+        </button>
       </form>
-      <P>Upload an image → AI verifies the content → Result shows if it's real or fake.</P>
-    
-      </>
+
+      <p className="text-center text-green-400">
+        Upload an image → AI verifies the content → Result shows if it's real or fake.
+      </p>
+    </>
   );
 }
