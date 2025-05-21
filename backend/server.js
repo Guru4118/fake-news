@@ -9,7 +9,14 @@ const app = express();
 connectDB();
 
 // CORS & JSON parsing
-app.use(cors());
+
+
+app.use(cors({
+  origin: ['https://your-frontend.onrender.com'], // allow frontend URL
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 // ✅ Global Headers Middleware
