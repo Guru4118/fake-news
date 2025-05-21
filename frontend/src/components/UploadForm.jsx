@@ -14,7 +14,7 @@ export default function UploadForm({ onResult }) {
 
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.post('/api/fact-check/image', formData, {
+      const { data } = await axios.post('https://fake-news-erql.onrender.com/api/fact-check/image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
