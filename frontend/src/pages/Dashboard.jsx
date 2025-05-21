@@ -108,9 +108,10 @@ export default function Dashboard() {
         data-aos="fade-up"
         data-aos-duration="1500"
       >
-        <UploadForm onResult={setResult} />
+        <UploadForm data-aos="flip-left" onResult={setResult} />
         {result && <ResultDisplay data={result} />}
       </div>
+      
 
       {/* About Us */}
       <section id="about" className="py-12 bg-gray-900" data-aos="fade-down" data-aos-duration="1500">
