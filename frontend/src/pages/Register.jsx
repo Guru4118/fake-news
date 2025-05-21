@@ -11,7 +11,7 @@ export default function Register() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/api/auth/register', { name, email, password });
+      const { data } = await axios.post('https://fake-news-erql.onrender.com/api/auth/register', { name, email, password });
       localStorage.setItem('token', data.token);
       navigate('/dashboard');
     } catch (err) {
