@@ -49,6 +49,8 @@ export default function UploadForm({ onResult }) {
       >
         {loading ? 'Processing...' : 'Upload & Check'}
       </button>
+      <br/>
+      <P>Upload an image → AI verifies the content → Result shows if it's real or fake.</P>
     </form>
   );
 }
