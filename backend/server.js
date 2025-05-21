@@ -12,7 +12,7 @@ connectDB();
 
 
 app.use(cors({
-  origin: ['https://your-frontend.onrender.com'], // allow frontend URL
+  origin: ['https://fake-news-1-ued8.onrender.com'], // allow frontend URL
   methods: ['GET', 'POST'],
   credentials: true
 }));
