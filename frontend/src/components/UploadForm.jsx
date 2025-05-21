@@ -29,6 +29,7 @@ export default function UploadForm({ onResult }) {
   };
 
   return (
+    <>
     <form
       onSubmit={submitHandler}
       className="bg-black p-6 rounded-lg shadow-lg mb-6 max-w-md mx-auto border border-green-500"
@@ -50,7 +51,9 @@ export default function UploadForm({ onResult }) {
         {loading ? 'Processing...' : 'Upload & Check'}
       </button>
       <br/>
+      </form>
       <P>Upload an image → AI verifies the content → Result shows if it's real or fake.</P>
-    </form>
+    
+      </>
   );
 }
