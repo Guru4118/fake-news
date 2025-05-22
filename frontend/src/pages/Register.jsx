@@ -39,9 +39,9 @@ export default function Register() {
           </button>
 
           <ul className="hidden lg:flex space-x-8 text-lg">
-            <li><a href="#dash" className="text-green-500 hover:text-white transition-all duration-300">Home</a></li>
-            <li><a href="#about" className="text-green-500 hover:text-white transition-all duration-300">About Us</a></li>
-            <li><a href="#contact" className="text-green-500 hover:text-white transition-all duration-300">Contact Us</a></li>
+            <li><a href="/dashboard" className="text-green-500 hover:text-white transition-all duration-300">Home</a></li>
+            <li><a href="/dashboard#about" className="text-green-500 hover:text-white transition-all duration-300">About Us</a></li>
+            <li><a href="/dashboard#contact" className="text-green-500 hover:text-white transition-all duration-300">Contact Us</a></li>
           </ul>
 
           <Link
@@ -55,9 +55,9 @@ export default function Register() {
         {/* Mobile Menu */}
         <div className={`lg:hidden bg-gray-800 text-white w-full ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
           <ul className="space-y-4 py-4 px-4">
-            <li><a href="#dash" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>Home</a></li>
-            <li><a href="#about" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>About Us</a></li>
-            <li><a href="#contact" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>Contact Us</a></li>
+            <li><a href="/dashboard" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>Home</a></li>
+            <li><a href="/dashboard#about" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>About Us</a></li>
+            <li><a href="/dashboard#contact" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>Contact Us</a></li>
             <li>
               <Link
                 to="/login"
