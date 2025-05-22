@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import Dashboard from './Dashboard';
 
 export default function Register() {
   const [name, setName] = useState('');
