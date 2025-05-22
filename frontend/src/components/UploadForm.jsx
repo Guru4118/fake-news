@@ -1,21 +1,25 @@
 import { useState } from 'react';
 import axios from 'axios';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+
+useEffect(() => {
+  AOS.init({ duration: 2000 });
+  const interval = setInterval(() => {
+    AOS.refresh();
+  }, 4000); // Re-trigger every 4s
+  return () => clearInterval(interval);
+}, []);
+
 
 export default function UploadForm({ onResult }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [trialInfo, setTrialInfo] = useState({ trialsUsed: 0, trialsRemaining: 5 });
-
-  const token = localStorage.getItem('token');
-  const isLoggedIn = Boolean(token);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!file) return alert('Please select an image');
-
-    if (!isLoggedIn && trialInfo.trialsRemaining <= 0) {
-      return alert('Free trial limit reached. Please log in to continue.');
-    }
 
     setLoading(true);
     const formData = new FormData();
@@ -28,16 +32,9 @@ export default function UploadForm({ onResult }) {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            ...(token && { Authorization: `Bearer ${token}` }),
           },
         }
       );
-
-      // Update trial info from backend response
-      setTrialInfo({
-        trialsUsed: data.trialsUsed ?? 0,
-        trialsRemaining: data.trialsRemaining === 'Unlimited' ? Infinity : data.trialsRemaining,
-      });
 
       onResult(data);
     } catch (err) {
@@ -64,22 +61,22 @@ export default function UploadForm({ onResult }) {
 
         <button
           type="submit"
-          disabled={loading || (!isLoggedIn && trialInfo.trialsRemaining <= 0)}
+          disabled={loading}
           className="w-full bg-green-500 text-white font-semibold py-2 rounded hover:bg-green-600 disabled:opacity-50 transition"
         >
           {loading ? 'Processing...' : 'Upload & Check'}
         </button>
-
-        {!isLoggedIn && (
-          <p className="text-sm text-green-400 mt-2 text-center">
-            Free trials remaining: {trialInfo.trialsRemaining === Infinity ? 'Unlimited' : trialInfo.trialsRemaining} / 5
-          </p>
-        )}
       </form>
 
-      <p className="text-center text-green-400">
-        Upload an image → AI verifies the content → Result shows if it's real or fake.
-      </p>
+      <p
+  className="text-center text-green-400"
+  data-aos="zoom-in"
+  data-aos-duration="2000"
+>
+  Upload an image → AI verifies the content → Result shows if it's real or fake.
+</p>
+
+
     </>
   );
 }
