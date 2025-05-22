@@ -4,12 +4,16 @@ const { analyzeText } = require('../utils/openaiCheck');
 const { generatePDFReport } = require('../utils/generatePDF');
 
 exports.uploadAndCheck = async (req, res) => {
-  const imagePath = req.file.path;
-
   try {
+    if (!req.file || !req.file.path) {
+      return res.status(400).json({ msg: 'No image file uploaded' });
+    }
+
+    const imagePath = req.file.path;
+    console.log('[INFO] Image uploaded at:', imagePath);
+
     // 1. Handle Free Trials for Guest Users
     if (!req.user) {
-      // Initialize session counter if not present
       if (!req.session.trialCount) req.session.trialCount = 0;
 
       if (req.session.trialCount >= 5) {
@@ -17,15 +21,28 @@ exports.uploadAndCheck = async (req, res) => {
       }
 
       req.session.trialCount += 1;
+      console.log(`[INFO] Guest trial used. Count: ${req.session.trialCount}/5`);
     }
 
     // 2. OCR Extraction
-    const { data: { text } } = await tesseract.recognize(imagePath, 'eng');
+    console.log('[INFO] Running OCR...');
+    const {
+      data: { text }
+    } = await tesseract.recognize(imagePath, 'eng');
+
+    if (!text.trim()) {
+      return res.status(400).json({ msg: 'No text detected in the image.' });
+    }
+
+    console.log('[INFO] OCR Text Extracted:', text.slice(0, 100), '...');
 
     // 3. AI Analysis
+    console.log('[INFO] Sending text to AI for analysis...');
     const result = await analyzeText(text);
+    console.log('[INFO] AI analysis completed:', result);
 
     // 4. PDF Generation
+    console.log('[INFO] Generating PDF report...');
     const pdfFile = await generatePDFReport({
       extractedText: text.trim(),
       verdict: result.verdict,
@@ -33,6 +50,8 @@ exports.uploadAndCheck = async (req, res) => {
       confidence: result.confidence,
       sources: result.sources
     });
+
+    console.log('[INFO] PDF generated at:', `/uploads/${pdfFile}`);
 
     // 5. Send Response
     res.json({
@@ -46,7 +65,11 @@ exports.uploadAndCheck = async (req, res) => {
       trialsRemaining: req.user ? 'Unlimited' : 5 - (req.session?.trialCount || 0)
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: 'Failed to process the image' });
+    console.error('[ERROR]', error);
+    res.status(500).json({
+      msg: 'Failed to process the image',
+      error: error.message,
+      stack: process.env.NODE_ENV !== 'production' ? error.stack : undefined
+    });
   }
 };
