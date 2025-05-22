@@ -41,14 +41,7 @@ export default function ResultDisplay({ data }) {
         ))}
       </ul>
 
-      <a
-        href={pdf}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-      >
-        Download PDF Report
-      </a>
+     
     </div>
   );
 }
