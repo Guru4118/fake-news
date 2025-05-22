@@ -1,21 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import AOS from 'aos';
-
-
-
-useEffect(() => {
-  AOS.init({ duration: 2000 });
-  const interval = setInterval(() => {
-    AOS.refresh();
-  }, 4000); // Re-trigger every 4s
-  return () => clearInterval(interval);
-}, []);
-
+import 'aos/dist/aos.css';
 
 export default function UploadForm({ onResult }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // ✅ Move useEffect INSIDE the component
+  useEffect(() => {
+    AOS.init({ duration: 2000 });
+    const interval = setInterval(() => {
+      AOS.refresh(); // Re-trigger AOS animations
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -69,14 +69,12 @@ export default function UploadForm({ onResult }) {
       </form>
 
       <p
-  className="text-center text-green-400"
-  data-aos="zoom-in"
-  data-aos-duration="2000"
->
-  Upload an image → AI verifies the content → Result shows if it's real or fake.
-</p>
-
-
+        className="text-center text-green-400"
+        data-aos="zoom-in"
+        data-aos-duration="2000"
+      >
+        Upload an image → AI verifies the content → Result shows if it's real or fake.
+      </p>
     </>
   );
 }
