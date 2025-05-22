@@ -5,6 +5,8 @@ const { uploadAndCheck } = require('../controller/factCheckController');
 
 const router = express.Router();
 
-router.post('/image', optionalAuth, upload.single('image'), uploadAndCheck);
+
+router.post('/image', upload.single('image'), uploadAndCheck);
+
 
 module.exports = router;
