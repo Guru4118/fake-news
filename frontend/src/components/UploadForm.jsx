@@ -72,7 +72,7 @@ export default function UploadForm({ onResult }) {
         className="text-center text-green-400"
         data-aos="zoom-in"
         data-aos-duration="2000"
-        className ="bg-white p-2 text-green-500"
+        className =" text-green-500"
       >
         Upload an image → AI verifies the content → Result shows if it's real or fake.
       </p>
