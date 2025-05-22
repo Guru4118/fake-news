@@ -20,6 +20,72 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-black text-white">
+       {/* Navbar */}
+      <nav className="bg-gray-900 p-4 shadow-md">
+        <div className="flex justify-between items-center max-w-screen-xl mx-auto">
+          <h1 className="text-3xl font-bold text-green-500">Fake News Detector</h1>
+
+          {/* Hamburger Icon for Mobile */}
+          <button
+            className="lg:hidden text-green-500"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          {/* Desktop Menu */}
+          <ul className="hidden lg:flex space-x-8 text-lg">
+            <li><a href="#dash" className="text-green-500 hover:text-white transition-all duration-300">Home</a></li>
+            <li><a href="#about" className="text-green-500 hover:text-white transition-all duration-300">About Us</a></li>
+            <li><a href="#contact" className="text-green-500 hover:text-white transition-all duration-300">Contact Us</a></li>
+          </ul>
+
+          {/* Login/Logout Button */}
+          {isLoggedIn ? (
+            <button
+              onClick={logout}
+              className="hidden lg:block bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all duration-300"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={goToLogin}
+              className="hidden lg:block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-all duration-300"
+            >
+              Login
+            </button>
+          )}
+        </div>
+
+        {/* Mobile Menu */}
+        <div className={`lg:hidden bg-gray-800 text-white w-full ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
+          <ul className="space-y-4 py-4">
+            <li><a href="#dash" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>Home</a></li>
+            <li><a href="#about" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>About Us</a></li>
+            <li><a href="#contact" className="block text-green-500 hover:text-white transition-all duration-300" onClick={() => setIsMobileMenuOpen(false)}>Contact Us</a></li>
+            <li>
+              {isLoggedIn ? (
+                <button
+                  onClick={logout}
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-all duration-300"
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  onClick={goToLogin}
+                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-all duration-300"
+                >
+                  Login
+                </button>
+              )}
+            </li>
+          </ul>
+        </div>
+      </nav>
       <form
         onSubmit={submitHandler}
         className="bg-gray-900 p-6 rounded-lg shadow-xl w-full sm:max-w-md max-w-lg animate__animated animate__fadeIn"
