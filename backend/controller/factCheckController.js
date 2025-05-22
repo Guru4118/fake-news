@@ -13,14 +13,7 @@ exports.uploadAndCheck = async (req, res) => {
 
     const imagePath = req.file.path;
 
-    // Trial logic
-    if (!req.user) {
-      if (!req.session.trialCount) req.session.trialCount = 0;
-      if (req.session.trialCount >= 5) {
-        return res.status(403).json({ msg: 'Free trial limit exceeded. Please login to continue.' });
-      }
-      req.session.trialCount += 1;
-    }
+    // --- Removed login check & trial limit ---
 
     console.log('[DEBUG] Running OCR on:', imagePath);
     const { data: { text } } = await tesseract.recognize(imagePath, 'eng');
@@ -48,9 +41,7 @@ exports.uploadAndCheck = async (req, res) => {
       confidence: result.confidence,
       explanation: result.explanation,
       sources: result.sources,
-      pdf: `/uploads/${pdfFile}`,
-      trialsUsed: req.session?.trialCount || 0,
-      trialsRemaining: req.user ? 'Unlimited' : 5 - (req.session?.trialCount || 0)
+      pdf: `/uploads/${pdfFile}`
     });
 
   } catch (error) {
