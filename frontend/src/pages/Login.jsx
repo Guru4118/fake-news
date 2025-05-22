@@ -51,9 +51,9 @@ export default function Login() {
             </svg>
           </button>
           <ul className="hidden lg:flex space-x-8 text-lg">
-            <li><a href="/dashboard" className="text-green-500 hover:text-white">Home</a></li>
-            <li><a href="/dashboard#about" className="text-green-500 hover:text-white">About Us</a></li>
-            <li><a href="/dashboard#contact" className="text-green-500 hover:text-white">Contact Us</a></li>
+            <li><Link to="/dashboard" className="text-green-500 hover:text-white">Home</Link></li>
+            <li><Link to="/dashboard#about" className="text-green-500 hover:text-white">About Us</Link></li>
+            <li><Link to="/dashboard#contact" className="text-green-500 hover:text-white">Contact Us</Link></li>
           </ul>
           {isLoggedIn ? (
             <button onClick={logout} className="hidden lg:block bg-red-500 px-4 py-2 rounded hover:bg-red-600">Logout</button>
@@ -66,14 +66,30 @@ export default function Login() {
         {isMobileMenuOpen && (
           <div className="lg:hidden bg-gray-800 text-white w-full">
             <ul className="space-y-4 py-4 px-4">
-              <li><a href="/dashboard" className="block text-green-500 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Home</a></li>
-              <li><a href="/dashboard#about" className="block text-green-500 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>About Us</a></li>
-              <li><a href="/dashboard#contact" className="block text-green-500 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>Contact Us</a></li>
+              <li>
+                <Link to="/dashboard" className="block text-green-500 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard#about" className="block text-green-500 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard#contact" className="block text-green-500 hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                  Contact Us
+                </Link>
+              </li>
               <li>
                 {isLoggedIn ? (
-                  <button onClick={logout} className="w-full bg-red-500 px-4 py-2 rounded hover:bg-red-600">Logout</button>
+                  <button onClick={() => { setIsMobileMenuOpen(false); logout(); }} className="w-full bg-red-500 px-4 py-2 rounded hover:bg-red-600">
+                    Logout
+                  </button>
                 ) : (
-                  <button onClick={goToLogin} className="w-full bg-green-600 px-4 py-2 rounded hover:bg-green-700">Login</button>
+                  <button onClick={() => { setIsMobileMenuOpen(false); goToLogin(); }} className="w-full bg-green-600 px-4 py-2 rounded hover:bg-green-700">
+                    Login
+                  </button>
                 )}
               </li>
             </ul>
