@@ -4,19 +4,16 @@ import axios from 'axios';
 export default function UploadForm({ onResult }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [trialInfo, setTrialInfo] = useState({ trialsUsed: 0, trialsRemaining: 5 });
 
-  const getTrialCount = () => parseInt(localStorage.getItem('trialCount') || '0');
-  const incrementTrialCount = () => localStorage.setItem('trialCount', getTrialCount() + 1);
+  const token = localStorage.getItem('token');
+  const isLoggedIn = Boolean(token);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!file) return alert('Please select an image');
 
-    const token = localStorage.getItem('token');
-    const isLoggedIn = Boolean(token);
-    const trialCount = getTrialCount();
-
-    if (!isLoggedIn && trialCount >= 5) {
+    if (!isLoggedIn && trialInfo.trialsRemaining <= 0) {
       return alert('Free trial limit reached. Please log in to continue.');
     }
 
@@ -36,7 +33,11 @@ export default function UploadForm({ onResult }) {
         }
       );
 
-      if (!isLoggedIn) incrementTrialCount();
+      // Update trial info from backend response
+      setTrialInfo({
+        trialsUsed: data.trialsUsed ?? 0,
+        trialsRemaining: data.trialsRemaining === 'Unlimited' ? Infinity : data.trialsRemaining,
+      });
 
       onResult(data);
     } catch (err) {
@@ -63,15 +64,15 @@ export default function UploadForm({ onResult }) {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || (!isLoggedIn && trialInfo.trialsRemaining <= 0)}
           className="w-full bg-green-500 text-white font-semibold py-2 rounded hover:bg-green-600 disabled:opacity-50 transition"
         >
           {loading ? 'Processing...' : 'Upload & Check'}
         </button>
 
-        {!localStorage.getItem('token') && (
+        {!isLoggedIn && (
           <p className="text-sm text-green-400 mt-2 text-center">
-            Free trials remaining: {5 - getTrialCount() > 0 ? 5 - getTrialCount() : 0} / 5
+            Free trials remaining: {trialInfo.trialsRemaining === Infinity ? 'Unlimited' : trialInfo.trialsRemaining} / 5
           </p>
         )}
       </form>
